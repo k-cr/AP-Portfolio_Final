@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.portfolioData.getData().subscribe(data => {
-      this.myPortfolio = data;
+      this.myPortfolio = data[0];
     });
   }
 }

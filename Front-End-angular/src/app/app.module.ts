@@ -11,10 +11,15 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { SkillsComponent } from './components/skills/skills.component';
 import { PortfolioService } from './services/portfolio.service';
-import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { LogInComponent } from './components/log-in/log-in.component';
+import { PortfolioComponent } from './components/portfolio/portfolio.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { InterceptorService } from './services/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -24,17 +29,22 @@ import { MatButtonModule } from '@angular/material/button';
     NavbarComponent,
     ProfileComponent,
     ProjectsComponent,
-    SkillsComponent
+    SkillsComponent,
+    LogInComponent,
+    PortfolioComponent
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatProgressBarModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [PortfolioService, 
+    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
