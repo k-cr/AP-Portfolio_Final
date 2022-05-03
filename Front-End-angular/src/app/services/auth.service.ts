@@ -1,28 +1,26 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { NewUser } from '../models/new-user.model';
+import { LoginUser } from '../models/login-user.model';
+import { JwtDTO } from '../models/jwt-dto.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  url = "https://cristianramos.herokuapp.com/api/auth/login";
-  currentUserSubject: BehaviorSubject<any>;
-  constructor(private http:HttpClient) { 
-    console.log("el servicio de autenticación está andando bien");
-    this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem('currentUser') || '{}'));
+  authURL = "https://cristianramos.herokuapp.com/api/auth/";
+  constructor(private http: HttpClient) {   }
+
+  public newUser(newUser: NewUser): Observable<any>{
+    return this.http.post<any>(this.authURL + 'new', newUser);
   }
 
-  LogIn(credentials: any): Observable<any> {
-    return this.http.post(this.url, credentials).pipe(map(data => {
-      sessionStorage.setItem('currentUser', JSON.stringify(data));
-      this.currentUserSubject.next(data);
-      return data;
-    }))
+  public login(loginUser: LoginUser): Observable<any>{
+    return this.http.post<JwtDTO>(this.authURL + 'login', loginUser);
   }
 
-  get AuthUser(){
-    return this.currentUserSubject.value;
+  public refresh(dto: JwtDTO): Observable<any>{
+    return this.http.post<JwtDTO>(this.authURL + 'refresh', dto);
   }
 }

@@ -1,17 +1,17 @@
 <!-- Home section -->
 
 <div class="card mat-card mx-auto" id="card-about">
-    <img class="profile-cover" src="{{myPortfolio.bannerImage}}" alt="Card image cap">
+    <img class="profile-cover" src="{{myPortfolio.url_banner}}" alt="Card image cap">
     <div class="profile-details">
       <div class="info-about">
         <div class="img-about mb-3" id="profile-pfpEdit">
-          <img src="{{myPortfolio.profilePicture}}" id="profile-pfp">
+          <img src="{{myPortfolio.url_pfp}}" id="profile-pfp">
           <i class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#editProfile"></i>
         </div>
   
         <div class="mb-3" id="info-data">
           <div>
-            <h2>{{myPortfolio.name}}</h2>
+            <h2>{{myPortfolio.fullname}}</h2>
             <div id="info-company">{{myPortfolio.ocupation}}</div>
             <div id="info-contact">
               <span>{{myPortfolio.ubication}}</span>
@@ -20,9 +20,9 @@
           <ul id="info-details">
             <li>
               <a href="#" style="text-decoration: none;">
-                <img src="{{myPortfolio.institutionImage}}" alt=""
+                <img src="{{myPortfolio.institution_url}}" alt=""
                   class="logo-unpa">
-                <h5>{{myPortfolio.institution}}</h5>
+                <h5>{{myPortfolio.intitution}}</h5>
               </a>
             </li>
           </ul>

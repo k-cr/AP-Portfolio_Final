@@ -18,8 +18,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InterceptorService } from './services/interceptor.service';
+import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { InterceptorService } from './services/interceptor.service';
     ProjectsComponent,
     SkillsComponent,
     LogInComponent,
-    PortfolioComponent
+    PortfolioComponent,
+    ProfileEditComponent
   ],
   imports: [
     RouterModule,
@@ -41,10 +43,12 @@ import { InterceptorService } from './services/interceptor.service';
     MatProgressBarModule,
     MatCardModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
-  providers: [PortfolioService, 
-    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
+  providers: [],
   bootstrap: [AppComponent]
+
+  //PortfolioService,   {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}
 })
 export class AppModule { }
