@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Person } from 'src/app/models/person.model';
+import { PersonService } from 'src/app/services/person.service';
 import { PortfolioService } from 'src/app/services/portfolio.service';
+import { TokenService } from 'src/app/services/token.service';
+import { ProfileModalsComponent } from '../profileModals/profile-modals/profile-modals.component';
 
 
 @Component({
@@ -7,15 +11,56 @@ import { PortfolioService } from 'src/app/services/portfolio.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
-  myPortfolio:any;
+export class ProfileComponent{
+  @ViewChild("profileModals") profileModals!: ProfileModalsComponent;
 
-  constructor(private portfolioData:PortfolioService) { }
+  isLogged = false;
+  isAdmin = false;
 
-  ngOnInit(): void {
-    
-    this.portfolioData.getData().subscribe(data => {
-      this.myPortfolio = data;
-    });
+  person: Person = {
+    fullname: '',
+    ocupation: '',
+    intitution: '',
+    url_institution: '',
+    url_pfp: '',
+    url_banner: '',
+    education: [],
+    experience: [],
+    about: [],
+    softskill: [],
+    hardskill: [],
+    project: [],
+  }
+
+  constructor(private personService: PersonService, private tokenService: TokenService) {
+    this.getPerson();
+    this.isLogged = this.tokenService.isLogged();
+    this.isAdmin = this.tokenService.isAdmin();
+  }
+
+  editPerson() {
+    this.profileModals.setPerson(this.person);
+  }
+
+  getPerson(): void {
+    this.personService.getPerson(1).subscribe((data) => {this.person = data});
+  }
+
+  edit(): void {
+    this.profileModals.toggleForm();
+  }
+
+  create(person: Person){
+    if(person.id){
+      this.personService.update(person).subscribe((editedPerson) => {this.person = editedPerson});
+    }
+  }
+
+  toPerson(){
+    document.getElementById("person")!.scrollIntoView();
+  }
+
+  onLogOut(): void {
+    this.tokenService.logOut();
   }
 }

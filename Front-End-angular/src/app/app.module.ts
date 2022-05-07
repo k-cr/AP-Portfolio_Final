@@ -16,9 +16,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { LogInComponent } from './components/log-in/log-in.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { ProfileModalsComponent } from './components/Profile/profileModals/profile-modals/profile-modals.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProfileComponent,
     ProjectsComponent,
     SkillsComponent,
-    LogInComponent
+    ProfileModalsComponent,
+    PortfolioComponent
   ],
   imports: [
     RouterModule,

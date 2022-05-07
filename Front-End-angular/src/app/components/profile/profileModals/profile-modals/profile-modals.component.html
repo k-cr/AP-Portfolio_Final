@@ -1,1 +1,40 @@
-<p>profile-modals works!</p>
+<!-- Modal -->
+<form [formGroup]="form" (ngSubmit)="onSubmit($event)" *ngIf="showForm">
+    <div class="mb-3">
+        <label for="fullname" class="form-label">Nombre y apellido</label>
+        <input class="form-control" type="text" placeholder="Escriba su nombre y apellido"
+            aria-label="Escriba su nombre y apellido" formControlName="fullname" id="fullname">
+    </div>
+
+    <div class="mb-3">
+        <label for="ocupation" class="form-label">Ocupación</label>
+        <input class="form-control" type="text" placeholder="Ejemplo: Estudiante, Programador en Google."
+            aria-label="Ejemplo: Estudiante, Programador en Google." formControlName="ocupation" id="ocupation">
+    </div>
+
+    <div class="mb-3">
+        <label for="intitution" class="form-label">Institución</label>
+        <input class="form-control" type="text" placeholder="Ejemplo: Universidad Nacional de Buenos Aires"
+            aria-label="Ejemplo: Universidad Nacional de Buenos Aires" formControlName="intitution" id="intitution">
+    </div>
+    <div class="mb-3">
+        <label for="url_institution" class="form-label">Editar logo de la institución</label>
+        <input class="form-control" type="text" placeholder="URL del logo de su institución"
+            aria-label="URL del logo de su institución" formControlName="url_institution" id="url_institution">
+    </div>
+
+    <div class="mb-3">
+        <label for="url_pfp" class="form-label">Editar foto de perfil</label>
+        <input class="form-control" type="text" placeholder="URL de su foto de perfil"
+            aria-label="URL de su foto de perfil" formControlName="url_pfp" id="url_pfp">
+    </div>
+
+    <div class="mb-3">
+        <label for="url_banner" class="form-label">Editar banner de perfil</label>
+        <input class="form-control" type="text" placeholder="URL del banner de perfil"
+            aria-label="URL del banner de perfil" formControlName="url_banner" id="url_banner">
+    </div>
+
+    <button type="button" class="btn btn-secondary" (click)="cancel()">Cerrar</button>
+    <button type="button" class="btn btn-primary">Guardar cambios</button>
+</form>

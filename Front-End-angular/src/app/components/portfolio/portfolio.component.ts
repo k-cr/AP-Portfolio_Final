@@ -8,12 +8,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./portfolio.component.css']
 })
 export class PortfolioComponent implements OnInit {
-  url: string = "https://cristianramos.herokuapp.com/api/";
   constructor(private http:HttpClient) { }
-
-  getData(): Observable<any> {
-    return this.http.get<any>(this.url + "person");
-  }
 
   ngOnInit(): void {
   }
