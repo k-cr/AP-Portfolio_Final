@@ -7,11 +7,11 @@ import { Person } from '../models/person.model';
   providedIn: 'root'
 })
 export class PersonService {
-  PersonURL = "https://cristianramos.herokuapp.com/api/person";
+  PersonURL = "https://cristianramos.herokuapp.com/api/person/";
   constructor(private http: HttpClient) { }
 
-  public getPerson(id: number): Observable<Person> {
-    return this.http.get<Person>(this.PersonURL + 'ver/${id}');
+  public getPerson(): Observable<Person> {
+    return this.http.get<Person>(this.PersonURL + 'all');
   }
 
   public save(person: Person): Observable<Person> {

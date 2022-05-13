@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Profile } from 'src/app/models/profile.model';
-import { ProfileService } from 'src/app/services/profile.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Person } from 'src/app/models/person.model';
+import { PersonService } from 'src/app/services/person.service';
 import { PortfolioService } from 'src/app/services/portfolio.service';
+import { TokenService } from 'src/app/services/token.service';
+import { ProfileModalsComponent } from './profile-modals/profile-modals.component';
 
 
 @Component({
@@ -9,46 +11,50 @@ import { PortfolioService } from 'src/app/services/portfolio.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent{
+  @ViewChild("profileModals") profileModals!: ProfileModalsComponent;
 
-  profile?: Profile[];
-  currentProfile: Profile = {};
-  currentIndex = -1;
-  
-  myPortfolio:any;
+  isLogged = false;
+  isAdmin = false;
 
-  constructor(private portfolioData:PortfolioService, private profileService:ProfileService) { }
-
-  ngOnInit(): void {
-    
-    this.portfolioData.getData().subscribe(data => {
-      this.myPortfolio = data;
-    });
-
-    this.retrieveProfile();
+  person: Person = {
+    fullname: '',
+    ocupation: '',
+    intitution: '',
+    url_institution: '',
+    url_pfp: '',
+    url_banner: '',
   }
 
-  retrieveProfile(): void {
-    this.profileService.getAll()
-        .subscribe({
-          next: (data) => {
-            this.profile = data;
-            console.log(data);
-          },
-          error: (e) => console.error(e)
-        });
+  constructor(private personService: PersonService, private tokenService: TokenService) {
+    this.getPerson();
+    this.isLogged = this.tokenService.isLogged();
+    this.isAdmin = this.tokenService.isAdmin();
   }
 
-  refreshList(): void {
-    this.retrieveProfile();
-    this.currentProfile = {};
-    this.currentIndex = -1;
+  editPerson() {
+    this.profileModals.setPerson(this.person);
   }
 
-  setActiveProfile(profile: Profile, index: number): void {
-    this.currentProfile = profile;
-    this.currentIndex = index;
+  getPerson(): void {
+    this.personService.getPerson().subscribe((data) => {this.person = data});
   }
 
+  edit(): void {
+    this.profileModals.toggleForm();
+  }
 
+  create(person: Person){
+    if(person.id){
+      this.personService.update(person).subscribe((editedPerson) => {this.person = editedPerson});
+    }
+  }
+
+  toPerson(){
+    document.getElementById("person")!.scrollIntoView();
+  }
+
+  onLogOut(): void {
+    this.tokenService.logOut();
+  }
 }
